@@ -1,46 +1,95 @@
 body {
-  font-family: Arial, sans-serif;
-  max-width: 800px;
-  margin: 2rem auto;
-  padding: 1rem;
-  background: #f4f4f4;
+  margin: 0;
+  padding: 0;
+  background: url('https://media.giphy.com/media/3og0IPxMM0erATueVW/giphy.gif') repeat;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  color: lime;
+  text-shadow: 1px 1px 3px #ff00ff;
+}
+
+header {
+  text-align: center;
+  padding: 40px;
+  font-size: 40px;
+  font-weight: bold;
+  color: #00ffff;
+  background: linear-gradient(45deg, red, yellow, lime, cyan, blue, magenta);
+  background-size: 400% 400%;
+  animation: swagHeader 10s infinite linear;
+  border-bottom: 5px solid white;
+}
+
+@keyframes swagHeader {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
 }
 
 form {
-  background: white;
-  padding: 1rem;
-  border-radius: 5px;
-  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 50px;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.7);
+  border: 5px double #ff00ff;
+  box-shadow: 0 0 15px #00ffcc;
 }
 
 input, textarea {
-  width: 100%;
-  margin-bottom: 1rem;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  margin: 10px;
+  padding: 10px;
+  width: 80%;
+  font-size: 16px;
+  border: 2px solid #00ffff;
+  background: #111;
+  color: #0f0;
 }
 
 button {
-  padding: 0.5rem 1rem;
-  background: #007bff;
-  color: white;
+  background: linear-gradient(to right, #00ff00, #00ffff, #ff00ff);
   border: none;
-  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 20px;
+  color: black;
+  cursor: pointer;
+  box-shadow: 0 0 10px #fff;
+  text-transform: uppercase;
 }
 
-ul {
-  list-style: none;
-  padding: 0;
+button:hover {
+  animation: pulse 0.3s infinite alternate;
 }
 
-li {
-  background: white;
-  padding: 1rem;
-  border-radius: 5px;
-  margin-bottom: 1rem;
+@keyframes pulse {
+  0% {transform: scale(1);}
+  100% {transform: scale(1.1);}
 }
 
-h1 {
+.post {
+  margin: 20px auto;
+  padding: 20px;
+  width: 80%;
+  border: 3px dashed lime;
+  background-color: rgba(0, 0, 0, 0.85);
+  color: #ff69b4;
+  font-size: 18px;
+  animation: rainbowBorder 5s infinite linear;
+}
+
+@keyframes rainbowBorder {
+  0% {border-color: red;}
+  25% {border-color: yellow;}
+  50% {border-color: lime;}
+  75% {border-color: blue;}
+  100% {border-color: red;}
+}
+
+footer {
   text-align: center;
+  margin-top: 50px;
+  font-size: 14px;
+  color: #ccc;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 20px;
 }
