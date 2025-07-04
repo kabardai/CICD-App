@@ -41,13 +41,21 @@ jobs:
         docker push ${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:$IMAGE_TAG
 
     - name: Update ECS service with new image
-      env:
-        IMAGE_TAG: ${{ github.sha }}
-        ECR_URI: ${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:$IMAGE_TAG
       run: |
+        IMAGE_TAG=${{ github.sha }}
+        ECR_REPOSITORY=${{ env.ECR_REPOSITORY }}
+        ECR_URI=${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:$IMAGE_TAG
+        CONTAINER_NAME=${{ env.CONTAINER_NAME }}
+        ECS_CLUSTER=${{ env.ECS_CLUSTER }}
+        ECS_SERVICE=${{ env.ECS_SERVICE }}
+        ECS_TASK_FAMILY=${{ env.ECS_TASK_FAMILY }}
+
+        echo "Using image: $ECR_URI"
+        echo "Updating task family: $ECS_TASK_FAMILY"
+
         TASK_DEF=$(aws ecs describe-task-definition --task-definition $ECS_TASK_FAMILY)
-        NEW_TASK_DEF=$(echo "$TASK_DEF" | jq --arg IMAGE "$ECR_URI" \
-          --arg NAME "$CONTAINER_NAME" \
+
+        NEW_TASK_DEF=$(echo "$TASK_DEF" | jq --arg IMAGE "$ECR_URI" --arg NAME "$CONTAINER_NAME" \
           '.taskDefinition | {
             family: .family,
             executionRoleArn: .executionRoleArn,
@@ -61,5 +69,9 @@ jobs:
           }')
 
         echo "$NEW_TASK_DEF" > new-task-def.json
+
         REVISION=$(aws ecs register-task-definition --cli-input-json file://new-task-def.json | jq -r '.taskDefinition.revision')
+
+        echo "Registered new revision: $REVISION"
+
         aws ecs update-service --cluster $ECS_CLUSTER --service $ECS_SERVICE --task-definition $ECS_TASK_FAMILY:$REVISION
