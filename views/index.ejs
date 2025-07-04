@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mini Forum</title>
+</head>
+<body>
+    <h1>Mini Forum</h1>
+    <form action="/post" method="post">
+        <input type="text" name="title" placeholder="Title" required><br>
+        <textarea name="body" placeholder="Body" required></textarea><br>
+        <button type="submit">Post</button>
+    </form>
+    <hr>
+    <ul>
+        <% posts.forEach(post => { %>
+            <li><strong><%= post.title %></strong><br><%= post.body %></li>
+        <% }); %>
+    </ul>
+</body>
+</html>
+
