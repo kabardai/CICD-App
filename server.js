@@ -4,6 +4,9 @@ const mongoose = require('mongoose');
 
 const app = express();
 
+app.use(express.static('public'));
+
+
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URL || 'mongodb://localhost:27017/forum-app', {
     useNewUrlParser: true,
